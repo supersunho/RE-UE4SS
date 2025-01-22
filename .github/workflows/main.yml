@@ -38,12 +38,13 @@ jobs:
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
               with:
-                  xmake-version: 2.3.3
+                  xmake-version: "2.9.7"
+                  build-cache: true
                   actions-cache-folder: ".xmake-cache"
                   actions-cache-key: "linux-test"
             - name: Build
               run: |
-                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux"
+                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -a arm64
                   XMAKE_COLORTERM=nocolor xmake build -v -D > build.log
             - name: Stripping
               run: |
