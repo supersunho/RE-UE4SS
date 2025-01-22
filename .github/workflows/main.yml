@@ -45,7 +45,7 @@ jobs:
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache gcc-multilib
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
@@ -58,7 +58,7 @@ jobs:
                   actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
-                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean
+                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross
                   XMAKE_COLORTERM=nocolor xmake build -v -D > build.log
             - name: Stripping
               run: |
