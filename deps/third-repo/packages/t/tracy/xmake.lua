@@ -2,8 +2,8 @@ package("Tracy")
     add_urls("git@github.com:wolfpld/tracy.git")
     add_urls("https://github.com/wolfpld/tracy.git")
 
-    -- add_versions("v0.10", "37aff70dfa50cf6307b3fee6074d627dc2929144")
-    add_versions("v0.11.1", "a1b2c3d4e5f67890123456789abcdef123456789")
+    -- add_versions("v0.10", "37aff70dfa50cf6307b3fee6074d627dc2929143")
+    add_versions("v0.11.1", "5d542dc09f3d9378d005092a4ad446bd405f819a")
 
     add_deps("cmake")
 
