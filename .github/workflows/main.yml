@@ -51,7 +51,7 @@ jobs:
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
               with:
-                  xmake-version: "2.3.3"
+                  xmake-version: "latest"
                   build-cache: true
                   build-cache-key: "xmake-build-cache"
                   build-cache-path: "build/.build_cache"

@@ -114,7 +114,7 @@ option("libcxx")
 
 if has_config("libcxx") then
     table.insert(CLANG_COMPILE_OPTIONS["cxflags"], "-stdlib=libc++")
-    table.insert(CLANG_COMPILE_OPTIONS["cxflags"], "-fexperimental-library")
+    -- table.insert(CLANG_COMPILE_OPTIONS["cxflags"], "-fexperimental-library")
     table.insert(CLANG_COMPILE_OPTIONS["ldflags"], "-static-libstdc++")
     table.insert(CLANG_COMPILE_OPTIONS["ldflags"], "-l:libc++abi.a")
 end
