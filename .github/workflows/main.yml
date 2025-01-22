@@ -32,19 +32,28 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - uses: goto-bus-stop/setup-zig@v2
+            - uses: mlugg/setup-zig@v1
             - run: zig cc -v
 
             - name: Setup Rust
-              uses: dtolnay/rust-toolchain@1.76.0
+              uses: actions-rs/toolchain@v1
+              with:
+                  profile: minimal
+                  toolchain: stable
+                  # components: rustfmt, clippy
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y nim
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
               with:
                   xmake-version: "2.9.7"
                   build-cache: true
+                  build-cache-key: "xmake-build-cache"
                   actions-cache-folder: ".xmake-cache"
-                  actions-cache-key: "linux-test"
+                  actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
                   xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -a arm64 -vD --clean
