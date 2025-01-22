@@ -8,7 +8,7 @@ package("imtui")
 
     -- WARN: xmake cannot distinguish ncursesw and ncurses, this may cause problem on other systems
     add_deps("cmake")
-    add_deps("ncurses 6.1")
+    add_deps("ncurses 6.5")
 
     add_includedirs("include", "include/imgui", "include/imgui-for-imtui/", "include/imgui-for-imtui/imgui", "include/imtui", {public = true})
 
