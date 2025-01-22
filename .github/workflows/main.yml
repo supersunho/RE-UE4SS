@@ -32,9 +32,9 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - uses: goto-bus-stop/setup-zig@v2
+            - uses: korandoru/setup-zig@v1
               with:
-                  version: 0.13.0
+                  zig-version: master
 
             - name: Change chmod for zig
               run: |
