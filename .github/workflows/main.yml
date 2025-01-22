@@ -37,6 +37,12 @@ jobs:
                   version: 0.13.0 # released versions or master
             - run: zig cc --verbose
 
+            - name: Change chmod for zig
+              run: |
+                  sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
+                  sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
+                  sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
+
             - name: Setup Rust
               uses: actions-rs/toolchain@v1
               with:
