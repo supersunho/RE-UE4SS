@@ -33,7 +33,9 @@ jobs:
               uses: actions/checkout@v4
 
             - uses: mlugg/setup-zig@v1
-            - run: zig cc -v
+              with:
+                  version: master
+            - run: zig version
 
             - name: Setup Rust
               uses: actions-rs/toolchain@v1
@@ -44,7 +46,7 @@ jobs:
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y nim
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
@@ -52,7 +54,8 @@ jobs:
                   xmake-version: "2.9.7"
                   build-cache: true
                   build-cache-key: "xmake-build-cache"
-                  actions-cache-folder: ".xmake-cache"
+                  build-cache-path: "build/.build_cache"
+                  actions-cache-folder: "build/.xmake-cache"
                   actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
