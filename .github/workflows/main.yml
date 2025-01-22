@@ -35,13 +35,16 @@ jobs:
             - uses: goto-bus-stop/setup-zig@v2
               with:
                   version: 0.13.0 # released versions or master
-            - run: zig cc --verbose
+            - run: zig --verbose
 
             - name: Change chmod for zig
               run: |
                   sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
+                  sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++ --version
                   sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
+                  sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc --version
                   sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
+                  sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar --version
 
             - name: Setup Rust
               uses: actions-rs/toolchain@v1
