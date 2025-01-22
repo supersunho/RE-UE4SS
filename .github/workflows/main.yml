@@ -32,22 +32,20 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - uses: korandoru/setup-zig@v1
+            - uses: goto-bus-stop/setup-zig@v2
               with:
-                  zig-version: 0.13.0 # released versions or master
-            - run: zig version
+                  version: 0.13.0 # released versions or master
+            - run: zig cc --verbose
 
             - name: Setup Rust
               uses: actions-rs/toolchain@v1
               with:
-                  profile: minimal
                   toolchain: stable
                   # components: rustfmt, clippy
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache
-                  sudo ls -al /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache gcc-multilib
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
