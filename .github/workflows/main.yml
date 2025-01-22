@@ -32,9 +32,9 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - uses: mlugg/setup-zig@v1
+            - uses: korandoru/setup-zig@v1
               with:
-                  version: master
+                  zig-version: 0.13.0 # released versions or master
             - run: zig version
 
             - name: Setup Rust
@@ -46,12 +46,12 @@ jobs:
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
               with:
-                  xmake-version: "2.9.7"
+                  xmake-version: "2.3.3"
                   build-cache: true
                   build-cache-key: "xmake-build-cache"
                   build-cache-path: "build/.build_cache"
