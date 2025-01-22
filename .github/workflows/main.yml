@@ -59,7 +59,7 @@ jobs:
                   actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
-                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -a arm64 -vD --clean
+                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean
                   XMAKE_COLORTERM=nocolor xmake build -v -D > build.log
             - name: Stripping
               run: |
