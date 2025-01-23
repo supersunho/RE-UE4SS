@@ -1,2 +1,6 @@
 [target.x86_64-unknown-linux-gnu]
 linker = "tools/zig/zig-cc"
+[target.x86_64-linux-gnu]
+linker = "tools/zig/zig-cc"
+[target.aarch64-linux-gnu]
+linker = "tools/zig/zig-cc"
