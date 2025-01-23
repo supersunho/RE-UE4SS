@@ -36,7 +36,11 @@ target("patternsleuth_bind")
     set_values("rust.edition", "2021")
     add_files("patternsleuth_bind/src/lib.rs")
     if is_plat("linux") and is_host("windows") then
-        add_rcflags("--target=x86_64-unknown-linux-gnu", {force = true})
+        if is_arch("arm64") then
+            add_rcflags("--target=aarch64-linux-gnu", {force = true})
+        else
+            add_rcflags("--target=x86_64-unknown-linux-gnu", {force = true})
+        end
     end
     add_packages("cargo::patternsleuth_bind")
     if is_plat("windows") then
