@@ -92,7 +92,7 @@ jobs:
                   actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
-                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --cc="sccache zig cc" --cxx="sccache zig c++" --ccache=y
+                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y
                   echo "Clean build done.. next building..."
                   xmake build -v -D
             - name: Stripping
