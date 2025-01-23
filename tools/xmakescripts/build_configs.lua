@@ -90,7 +90,8 @@ CLANG_COMPILE_OPTIONS = {
         "-Wno-unused-parameter",
         "-fms-extensions",
         "-Wignored-attributes",
-        "-fPIC"
+        "-fPIC",
+        "-Wno-deprecated-declarations"
     },
     ["ldflags"] = {
         "-g"

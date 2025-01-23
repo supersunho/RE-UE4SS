@@ -56,11 +56,12 @@ toolchain("zigcross")
         set_toolset("sh", os.scriptdir() .. "/tools/zig/zig-c++")
         set_toolset("ar", os.scriptdir() .. "/tools/zig/zig-ar")
     end
-    -- add_cxflags("-fexperimental-library")
+    add_cxflags("-fexperimental-library")
     add_cxflags("-fno-delete-null-pointer-checks")
     add_cxflags("-gdwarf")
     add_cxflags("-fno-sanitize=undefined") -- can also use O2 to avoid this, but I'd prefer getting clear binary for now
     add_shflags("-z", "lazy")
+    add_shflags("-Wno-deprecated-declarations")
 toolchain_end()
 
 -- Override the `xmake install` behavior for all targets.
