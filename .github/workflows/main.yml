@@ -63,7 +63,37 @@ jobs:
                   sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc --version
                   sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
                   sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar --version
+            - uses: Hanaasagi/zig-action-cache@master # Or Hanaasagi/zig-action-cache@v1
+              with:
+                  # description: 'The prefix cache key, this can be changed to start a new cache manually.'
+                  # required: false
+                  # default: 'zig-cache-step-0'
+                  prefix-key: ""
 
+                  # description: 'A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.'
+                  # required: false
+                  # default: ""
+                  shared-key: ""
+
+                  # description: 'An additional cache key that is added alongside the automatic `job`-based cache key and can be used to further differentiate jobs.'
+                  # required: false
+                  # default: ""
+                  key: ""
+
+                  # description: 'Additional environment variables to include in the cache key, separated by spaces.'
+                  # required: false
+                  # default: ""
+                  env-vars: ""
+
+                  # description: 'Additional non workspace directories to be cached, separated by newlines.'
+                  # required: false
+                  # default: ""
+                  cache-directories: "build/.zig-cache"
+
+                  # description: 'Cache even if the build fails. Defaults to false.'
+                  # required: false
+                  # default: 'false'
+                  cache-on-failure: false
             - name: Setup Rust
               uses: actions-rs/toolchain@v1
               with:
