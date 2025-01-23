@@ -22,8 +22,14 @@ on:
 jobs:
     make-release:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                target:
+                    - x86_64-linux-gnu
+                    # - aarch64-linux-gnu
+                    # - x86_64-windows-gnu
         permissions:
-            contents: read
+            contents: write
             packages: write
             # This is used to complete the identity challenge
             # with sigstore/fulcio when running outside of PRs.
@@ -54,6 +60,15 @@ jobs:
             - run: |
                   which zig
                   sudo ln -s $(which zig) /usr/local/bin/zig
+
+            - name: Create Bash Script
+              run: |
+                  echo '#!/bin/bash' > /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
+                  echo "exec zig c++ -target ${{ matrix.target }} \"\$@\"" >> /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
+                  echo '#!/bin/bash' > /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
+                  echo "exec zig cc -target ${{ matrix.target }} \"\$@\"" >> /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
+                  echo '#!/bin/bash' > /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
+                  echo "exec zig ar \"\$@\"" >> /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
 
             - name: Change chmod for zig
               run: |
