@@ -35,7 +35,12 @@ jobs:
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache cmake clang libclang-dev llvm-19 llvm-19-dev clang-19
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache cmake clang libclang-dev
+
+            - name: Install LLVM 19
+              uses: KyleMayes/install-llvm-action@v2
+              with:
+                  version: "19.0"
 
             - name: Build Zig compiler
               run: |
