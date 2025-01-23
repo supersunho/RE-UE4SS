@@ -32,15 +32,32 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache cmake clang libclang-dev llvm-dev
+
+            - name: Build Zig compiler
+              run: |
+                  git clone https://github.com/ziglang/zig.git
+                  cd zig && mkdir build && cd build
+                  cmake .. -DCMAKE_BUILD_TYPE=Release
+                  make -j$(nproc)
+                  sudo make install
+
+            - name: Verify Build
+              run: |
+                  ./zig/build/zig version
+                  sudo ln -s ./zig/build/zig /usr/local/bin/zig
             # - uses: korandoru/setup-zig@v1
             #   with:
             #       zig-version: master
-            - uses: mlugg/setup-zig@v1
-              with:
-                  version: 0.13.0
-            - run: |
-                  which zig
-                  sudo ln -s $(which zig) /usr/local/bin/zig
+            # - uses: mlugg/setup-zig@v1
+            #   with:
+            #       version: 0.13.0
+            # - run: |
+            #       which zig
+            #       sudo ln -s $(which zig) /usr/local/bin/zig
 
             - name: Change chmod for zig
               run: |
@@ -56,10 +73,6 @@ jobs:
               with:
                   toolchain: stable
                   # components: rustfmt, clippy
-            - name: Install dependencies
-              run: |
-                  sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
