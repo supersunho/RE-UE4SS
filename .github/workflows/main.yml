@@ -47,9 +47,14 @@ jobs:
             - name: Install dependencies
               if: ${{ matrix.target == 'aarch64-linux-gnu' }}
               run: |
-                  sudo dpkg --add-architecture arm64
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache libncurses-dev:arm64 libtinfo6:arm64
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache wget
+                  wget https://ports.ubuntu.com/pool/main/n/ncurses/libncurses-dev_6.5-2_arm64.deb
+                  wget https://ports.ubuntu.com/pool/main/n/ncurses/libncurses6_6.5-2_arm64.deb
+                  wget https://ports.ubuntu.com/pool/main/n/ncurses/libncursesw6_6.5-2_arm64.deb
+                  wget https://ports.ubuntu.com/pool/main/n/ncurses/libtinfo6_6.5-2_arm64.deb
+                  wget https://ports.ubuntu.com/pool/main/n/ncurses/ncurses-bin_6.5-2_arm64.deb
+                  sudo dpkg -i libncurses-dev_6.5-2_arm64.deb libncurses6_6.5-2_arm64.deb libncursesw6_6.5-2_arm64.deb libtinfo6_6.5-2_arm64.deb ncurses-bin_6.5-2_arm64.deb
 
             - name: Setup LLVM
               uses: ZhongRuoyu/setup-llvm@v0
