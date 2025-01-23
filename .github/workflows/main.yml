@@ -69,31 +69,21 @@ jobs:
               with:
                   toolchain: stable
                   # components: rustfmt, clippy
-            - name: Setup Ninja
-              uses: seanmiddleditch/gha-setup-ninja@master
-            - name: Run sccache-cache
-              uses: mozilla-actions/sccache-action@v0.0.7
+
+            - name: Setup xmake
+              uses: xmake-io/github-action-setup-xmake@v1
+              with:
+                  xmake-version: "latest"
+                  build-cache: true
+                  build-cache-key: "xmake-build-cache"
+                  build-cache-path: "build/.build_cache"
+                  actions-cache-folder: "build/.xmake-cache"
+                  actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
-                  cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Game__Shipping__Linux -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
-                  cmake --build build
-              env:
-                  SCCACHE_GHA_ENABLED: "true"
-                  RUSTC_WRAPPER: "sccache"
-            # - name: Setup xmake
-            #   uses: xmake-io/github-action-setup-xmake@v1
-            #   with:
-            #       xmake-version: "latest"
-            #       build-cache: true
-            #       build-cache-key: "xmake-build-cache"
-            #       build-cache-path: "build/.build_cache"
-            #       actions-cache-folder: "build/.xmake-cache"
-            #       actions-cache-key: "xmake-actions-cache"
-            # - name: Build
-            #   run: |
-            #       xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross
-            #       echo "Clean build done.. next building..."
-            #       xmake build -v -D
+                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross
+                  echo "Clean build done.. next building..."
+                  xmake build -v -D
             - name: Stripping
               run: |
                   mkdir prepackage
