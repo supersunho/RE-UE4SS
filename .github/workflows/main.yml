@@ -47,8 +47,9 @@ jobs:
             - name: Install dependencies
               if: ${{ matrix.target == 'aarch64-linux-gnu' }}
               run: |
+                  sudo dpkg --add-architecture arm64
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache libncurses-dev:arm64 libtinfo6:arm64
 
             - name: Setup LLVM
               uses: ZhongRuoyu/setup-llvm@v0
