@@ -63,6 +63,8 @@ toolchain("zigcross")
     add_cxflags("-Wno-redefined-macros")
     add_cxflags("-fcommon")
     add_cxflags("-Wno-deprecated-declarations")
+    add_cxflags("-std=c++23")
+    remove_cxflags("-std=c++11") 
     add_shflags("-z", "lazy")
 toolchain_end()
 
