@@ -48,10 +48,10 @@ jobs:
                   sudo apt-get update
                   if [ "${{ matrix.arch }}" == "aarch64-linux-gnu" ]; then
                     echo "Setting up for aarch64-linux-gnu";
-                    sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache;
+                    sudo apt-get install -y build-essential ccache;
                   else
                     echo "Setting up for x86_64-linux-gnu";
-                    sudo apt-get install -y nim build-essential ccache;
+                    sudo apt-get install -y build-essential ccache;
                   fi
 
             - name: Setup LLVM
