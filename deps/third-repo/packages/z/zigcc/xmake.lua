@@ -16,8 +16,13 @@ package("zigcc")
             package:add("versions", "v0.13.0", json["x86_64-windows"]["shasum"])
         elseif is_host("linux") then
             -- print("Linux: " .. json["x86_64-linux"]["tarball"])
-            package:set("urls", json["x86_64-linux"]["tarball"])
-            package:add("versions", "v0.13.0", json["x86_64-linux"]["shasum"])
+            if is_arch("arm64") then
+                package:set("urls", json["aarch64-linux"]["tarball"])
+                package:add("versions", "v0.13.0", json["aarch64-linux"]["shasum"])
+            elseif
+                package:set("urls", json["x86_64-linux"]["tarball"])
+                package:add("versions", "v0.13.0", json["x86_64-linux"]["shasum"])
+            end
         else
             print("Unsupported platform!")
         end
