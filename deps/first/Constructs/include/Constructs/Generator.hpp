@@ -90,7 +90,7 @@ namespace RC
             auto operator++(int) -> iterator&
             {
                 iterator temp = *this;
-                *++this;
+                ++(*this);
                 return temp;
             }
 
