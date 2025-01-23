@@ -25,8 +25,8 @@ jobs:
         strategy:
             matrix:
                 target:
-                    - x86_64-linux-gnu
-                    # - aarch64-linux-gnu
+                    # - x86_64-linux-gnu
+                    - aarch64-linux-gnu
                     # - x86_64-windows-gnu
         permissions:
             contents: write
@@ -39,25 +39,29 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Install dependencies
+              if: ${{ matrix.target == 'x86_64-linux-gnu' }}
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache cmake clang libclang-dev
+                  sudo apt-get install -y nim build-essential ccache
 
-            # - name: Install LLVM 19
-            #   uses: KyleMayes/install-llvm-action@v2
-            #   with:
-            #       version: "19.0"
+            - name: Install dependencies
+              if: ${{ matrix.target == 'aarch64-linux-gnu' }}
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache
+
             - name: Setup LLVM
               uses: ZhongRuoyu/setup-llvm@v0
               with:
                   llvm-version: 19
-            # - uses: korandoru/setup-zig@v1
-            #   with:
-            #       zig-version: master
-            - uses: mlugg/setup-zig@v1
+
+            - name: Install Zig
+              uses: mlugg/setup-zig@v1
               with:
                   version: master
-            - run: |
+
+            - name: Symlink Zig
+              run: |
                   which zig
                   sudo ln -s $(which zig) /usr/local/bin/zig
 
@@ -78,6 +82,7 @@ jobs:
                   sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc --version
                   sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
                   sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar --version
+
             - uses: Hanaasagi/zig-action-cache@master # Or Hanaasagi/zig-action-cache@v1
               with:
                   # description: 'The prefix cache key, this can be changed to start a new cache manually.'
@@ -109,6 +114,7 @@ jobs:
                   # required: false
                   # default: 'false'
                   cache-on-failure: false
+
             - name: Setup Rust
               uses: actions-rs/toolchain@v1
               with:
@@ -156,9 +162,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  tag_name: ${{ github.ref_name }}
-                  release_name: Release ${{ github.ref_name }}
-                  body: "빌드된 결과물입니다."
+                  tag_name: UE4SS-${{ matrix.target }}
+                  release_name: UE4SS-${{ matrix.target }}
+                  body: "Build from ${{ matrix.target }}"
                   draft: false
                   prerelease: false
 
