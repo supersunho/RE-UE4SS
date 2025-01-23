@@ -68,21 +68,21 @@ jobs:
 
             - name: Create Bash Script
               run: |
-                  echo '#!/bin/bash' > /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
-                  echo "exec zig c++ -target ${{ matrix.arch }} \"\$@\"" >> /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
-                  echo '#!/bin/bash' > /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
-                  echo "exec zig cc -target ${{ matrix.arch }} \"\$@\"" >> /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
-                  echo '#!/bin/bash' > /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
-                  echo "exec zig ar \"\$@\"" >> /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
+                  echo '#!/bin/bash' > $GITHUB_WORKSPACE/tools/zig/zig-c++
+                  echo "exec zig c++ -target ${{ matrix.arch }} \"\$@\"" >> $GITHUB_WORKSPACE/tools/zig/zig-c++
+                  echo '#!/bin/bash' > $GITHUB_WORKSPACE/tools/zig/zig-cc
+                  echo "exec zig cc -target ${{ matrix.arch }} \"\$@\"" >> $GITHUB_WORKSPACE/tools/zig/zig-cc
+                  echo '#!/bin/bash' > $GITHUB_WORKSPACE/tools/zig/zig-ar
+                  echo "exec zig ar \"\$@\"" >> $GITHUB_WORKSPACE/tools/zig/zig-ar
 
             - name: Change chmod for zig
               run: |
-                  sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++
-                  sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-c++ --version
-                  sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc
-                  sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-cc --version
-                  sudo chmod +x /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar
-                  sudo /home/runner/work/RE-UE4SS/RE-UE4SS/tools/zig/zig-ar --version
+                  sudo chmod +x $GITHUB_WORKSPACE/tools/zig/zig-c++
+                  sudo $GITHUB_WORKSPACE/tools/zig/zig-c++ --version
+                  sudo chmod +x $GITHUB_WORKSPACE/tools/zig/zig-cc
+                  sudo $GITHUB_WORKSPACE/tools/zig/zig-cc --version
+                  sudo chmod +x $GITHUB_WORKSPACE/tools/zig/zig-ar
+                  sudo $GITHUB_WORKSPACE/tools/zig/zig-ar --version
 
             - uses: Hanaasagi/zig-action-cache@master # Or Hanaasagi/zig-action-cache@v1
               with:
