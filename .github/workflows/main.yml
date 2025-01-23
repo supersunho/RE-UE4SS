@@ -131,13 +131,37 @@ jobs:
                   objcopy --only-keep-debug Binaries/Game__Shipping__Linux/UE4SS/libUE4SS.so ./prepackage/libUE4SS.so.debug
                   cp Binaries/Game__Shipping__Linux/UE4SS/libUE4SS.so ./prepackage/libUE4SS.so
                   strip --strip-debug --strip-unneeded ./prepackage/libUE4SS.so
-                  cd ./prepackage && objcopy --add-gnu-debuglink=libUE4SS.so.debug ./libUE4SS.so && cd ..
-            - name: Package
-              run: python ./tools/buildscripts/build.py package -d ./prepackage -s linux64
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v3
+                  cd ./prepackage && objcopy --add-gnu-debuglink=libUE4SS.so.debug ./libUE4SS.so && ls -al && cd ..
+            - name: Archive build output
+              run: zip -r dist.zip ./Binaries/Game__Shipping__Linux
+
+            - name: Create GitHub Release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  name: Linux-Release
-                  path: |
-                      release/zDEV-UE4SS_0.0.0.zip
-                      build.log
+                  tag_name: ${{ github.ref_name }}
+                  release_name: Release ${{ github.ref_name }}
+                  body: "빌드된 결과물입니다."
+                  draft: false
+                  prerelease: false
+
+            - name: Upload Release Asset
+              uses: actions/upload-release-asset@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: ./dist.zip
+                  asset_name: dist.zip
+                  asset_content_type: application/zip
+            # - name: Package
+            #   run: python ./tools/buildscripts/build.py package -d ./prepackage -s linux64
+            # - name: Upload Artifacts
+            #   uses: actions/upload-artifact@v3
+            #   with:
+            #       name: Linux-Release
+            #       path: |
+            #           release/zDEV-UE4SS_0.0.0.zip
+            #           build.log
