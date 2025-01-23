@@ -168,14 +168,9 @@ namespace RC::LuaMadeSimple::Type
             if constexpr (is_final == LuaMadeSimple::Type::IsFinal::Yes)
             {
                 table.get_metamethods().create(LuaMadeSimple::Lua::MetaMethod::Index, [](const LuaMadeSimple::Lua& lua) -> int {
-                    try {
-                        RemoteObject<ObjectType>& lua_object = lua.get_userdata<RemoteObject<ObjectType>>();
-                        lua_object.get_pusher_callable()(lua, lua_object.get_remote_cpp_object());
-                        return 1;
-                    } catch (...) {
-                        // 오류 처리
-                        return 0;
-                    }
+                    RemoteObject<ObjectType>& lua_object = lua.get_userdata<RemoteObject<ObjectType>>();
+                    // lua_object.get_pusher_callable()(lua, lua_object.get_remote_cpp_object());
+                    return 0;
                 });
 
                 table.get_metamethods().create(LuaMadeSimple::Lua::MetaMethod::NewIndex, [](const LuaMadeSimple::Lua& lua) -> int {
