@@ -62,6 +62,7 @@ toolchain("zigcross")
     add_cxflags("-fno-sanitize=undefined") -- can also use O2 to avoid this, but I'd prefer getting clear binary for now
     add_shflags("-z", "lazy")
     add_shflags("-Wno-deprecated-declarations")
+    add_shflags("-Wno-redefined-macros")
 toolchain_end()
 
 toolchain("gcc-aarch64-linux-gnu")
