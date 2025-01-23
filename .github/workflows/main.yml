@@ -66,8 +66,7 @@ jobs:
 
             - name: Symlink Zig
               run: |
-                  which zig
-                  sudo ln -s $(which zig) /usr/local/bin/zig
+                  sudo ln -sf $(which zig) /usr/local/bin/zig
 
             - name: Create Bash Script
               run: |
