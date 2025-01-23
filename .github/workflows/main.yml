@@ -25,8 +25,8 @@ jobs:
             matrix:
                 os: [ubuntu-latest] # self-hosted는 ARM64용으로 설정
                 # os: [self-hosted] # self-hosted는 ARM64용으로 설정
-                arch: [x86_64-linux-gnu]
-                # arch: [aarch64-linux-gnu]
+                # arch: [x86_64-linux-gnu]
+                arch: [aarch64-linux-gnu]
         runs-on: ${{ matrix.os }}
 
         permissions:
