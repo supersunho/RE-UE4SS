@@ -32,9 +32,12 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - uses: korandoru/setup-zig@v1
+            # - uses: korandoru/setup-zig@v1
+            #   with:
+            #       zig-version: master
+            - uses: mlugg/setup-zig@v1
               with:
-                  zig-version: master
+                  version: 0.13.0
             - run: |
                   which zig
                   sudo ln -s $(which zig) /usr/local/bin/zig
