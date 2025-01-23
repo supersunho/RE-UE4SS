@@ -18,6 +18,8 @@ on:
         #   - "cmake/**"
         #   - tools/**
         #   - xmake.lua
+permissions:
+    contents: write
 
 jobs:
     make-release:
@@ -133,7 +135,7 @@ jobs:
                   strip --strip-debug --strip-unneeded ./prepackage/libUE4SS.so
                   cd ./prepackage && objcopy --add-gnu-debuglink=libUE4SS.so.debug ./libUE4SS.so && ls -al && cd ..
             - name: Archive build output
-              run: zip -r dist.zip ./Binaries/Game__Shipping__Linux
+              run: zip -r dist.zip ./prepackage
 
             - name: Create GitHub Release
               id: create_release
