@@ -37,11 +37,14 @@ jobs:
                   sudo apt-get update
                   sudo apt-get install -y nim build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross ccache cmake clang libclang-dev
 
-            - name: Install LLVM 19
-              uses: KyleMayes/install-llvm-action@v2
+            # - name: Install LLVM 19
+            #   uses: KyleMayes/install-llvm-action@v2
+            #   with:
+            #       version: "19.0"
+            - name: Setup LLVM
+              uses: ZhongRuoyu/setup-llvm@v0
               with:
-                  version: "19.0"
-
+                  llvm-version: 19
             - name: Build Zig compiler
               run: |
                   git clone https://github.com/ziglang/zig.git
