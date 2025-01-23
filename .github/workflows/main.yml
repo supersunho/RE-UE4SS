@@ -111,7 +111,7 @@ jobs:
                   # description: 'Additional non workspace directories to be cached, separated by newlines.'
                   # required: false
                   # default: ""
-                  cache-directories: "build/.zig-cache"
+                  cache-directories: "build/${{ matrix.os }}/${{ matrix.arch }}/.zig-cache"
 
                   # description: 'Cache even if the build fails. Defaults to false.'
                   # required: false
@@ -141,10 +141,10 @@ jobs:
               with:
                   xmake-version: "latest"
                   build-cache: true
-                  build-cache-key: "xmake-build-cache"
-                  build-cache-path: "build/.build_cache"
-                  actions-cache-folder: "build/.xmake-cache"
-                  actions-cache-key: "xmake-actions-cache"
+                  build-cache-key: "xmake-build-${{ matrix.os }}-${{ matrix.arch }}-cache"
+                  build-cache-path: "build/${{ matrix.os }}/${{ matrix.arch }}/.build_cache"
+                  actions-cache-folder: "build/${{ matrix.os }}/${{ matrix.arch }}/.xmake-cache"
+                  actions-cache-key: "xmake-actions-${{ matrix.os }}-${{ matrix.arch }}-cache"
 
             - name: Build
               run: |
