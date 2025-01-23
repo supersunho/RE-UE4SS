@@ -70,6 +70,17 @@ jobs:
                   toolchain: stable
                   # components: rustfmt, clippy
 
+            - name: Run sccache-cache
+              uses: mozilla-actions/sccache-action@v0.0.7
+
+            - name: Set up environment variables for sccache
+              run: |
+                  echo "SCCACHE_GHA_ENABLED=true" >> $GITHUB_ENV
+                  echo "RUSTC_WRAPPER=$(which sccache)" >> $GITHUB_ENV
+                  echo "SCCACHE_WRAPPER=$(which sccache)" >> $GITHUB_ENV
+                  echo "CC=sccache gcc" >> $GITHUB_ENV
+                  echo "CXX=sccache g++" >> $GITHUB_ENV
+
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
               with:
@@ -81,7 +92,7 @@ jobs:
                   actions-cache-key: "xmake-actions-cache"
             - name: Build
               run: |
-                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross
+                  xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --cc="sccache zig cc" --cxx="sccache zig c++" --ccache=y
                   echo "Clean build done.. next building..."
                   xmake build -v -D
             - name: Stripping
