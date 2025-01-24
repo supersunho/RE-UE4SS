@@ -49,7 +49,9 @@ jobs:
                   sudo apt-get install -y build-essential ccache;
                   if [ "${{ matrix.arch }}" == "aarch64-linux-gnu" ]; then
                     echo "Setting up for aarch64-linux-gnu";
-                    sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross 
+                    sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross
+                    aarch64-linux-gnu-gcc --version 
+                    aarch64-linux-gnu-g++ --version
                   fi
 
             - name: Setup LLVM
