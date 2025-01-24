@@ -19,6 +19,7 @@ package("polyhook_2")
         print(path.join(patch_dest, "for-arm64.patch"))
         -- add_patches("v0.0.593", path.join(patch_dest, "for-arm64.patch"))
         -- /usr/bin/git apply --reject --ignore-whitespace /tmp/.xmake0/250124/patches/polyhook_2/v0.0.593/for-arm64.patch
+        os.cd(patch_dest)
         os.vrun("/usr/bin/git apply --reject --ignore-whitespace %s", path.join(patch_dest, "for-arm64.patch"))
         -- Set CMake build types
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
