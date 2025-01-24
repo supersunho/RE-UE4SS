@@ -13,26 +13,29 @@ package("polyhook_2")
     on_install(function (package)
         local configs = {}
 
-        -- Set CMake Build types
+        -- Set CMake build types
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
         table.insert(configs, "-DBUILD_SHARED_LIBS=OFF")
-        -- Set CMake Options for PolyHook 
+        -- Set CMake options for PolyHook 
         table.insert(configs, "-DPOLYHOOK_BUILD_DLL=ON") 
         table.insert(configs, "-DPOLYHOOK_BUILD_SHARED_LIB=" .. (package:config("shared") and "ON" or "OFF"))
         table.insert(configs, "-DPOLYHOOK_USE_EXTERNAL_ZYDIS=ON") 
         table.insert(configs, "-DASMJIT_STATIC=" .. (package:config("shared") and "OFF" or "ON"))
         table.insert(configs, "-DPOLYHOOK_BUILD_STATIC_RUNTIME=OFF") 
 
-        if package:is_plat("windows") then
+        if is_plat("windows") then
             table.insert(configs, "-DZYDIS_INCLUDE_DIR=" .. package:dep("zydis"):installdir("include"))
             table.insert(configs, "-DZYCORE_INCLUDE_DIR=" .. package:dep("zycore"):installdir("include"))
             table.insert(configs, "-DZYCORE_LIBRARY=" .. package:dep("zycore"):installdir("lib/zycore.lib"))
             table.insert(configs, "-DZYDIS_LIBRARY=" .. package:dep("zydis"):installdir("lib/zydis.lib"))
-        elseif package:is_plat("linux") then
+        elseif is_plat("linux") then
             table.insert(configs, "-DZYDIS_INCLUDE_DIR=" .. package:dep("zydis"):installdir("include"))
             table.insert(configs, "-DZYCORE_INCLUDE_DIR=" .. package:dep("zycore"):installdir("include"))
             table.insert(configs, "-DZYCORE_LIBRARY=" .. package:dep("zycore"):installdir("lib/libzycore.a"))
             table.insert(configs, "-DZYDIS_LIBRARY=" .. package:dep("zydis"):installdir("lib/libzydis.a"))
+            if is_arch("arm64") then
+                table.insert(configs, "-DCMAKE_TOOLCHAIN_FILE=" .. path.join(os.scriptdir(), "toolchain.cmake")) 
+            end
         end
          
         -- Set MSVC Settings 
