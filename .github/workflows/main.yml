@@ -125,6 +125,10 @@ jobs:
               with:
                   toolchain: stable
                   # components: rustfmt, clippy
+            - name: Set up environment variables
+              if: ${{ matrix.arch == 'aarch64-linux-gnu' }}
+              run: |
+                  echo "STRIP=aarch64-linux-gnu-strip" >> $GITHUB_ENV
 
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
