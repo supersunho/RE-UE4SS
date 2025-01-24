@@ -159,7 +159,7 @@ jobs:
                   cd ./prepackage && objcopy --add-gnu-debuglink=libUE4SS.so.debug ./libUE4SS.so && ls -al && cd ..
                   cp -r ./assets/Mods ./prepackage
             - name: Generate unique tag
-              run: echo "tag_name=${{ matrix.arch }}-$(date +'%Y%m%dT%H%M')" >> $GITHUB_ENV
+              run: echo "tag_name=${{ matrix.arch }}-$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
 
             - name: Archive build output
               run: zip -r UE4SS-${{ matrix.arch }}.zip ./prepackage
