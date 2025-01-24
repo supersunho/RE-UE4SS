@@ -157,8 +157,10 @@ jobs:
                   cp Binaries/Game__Shipping__Linux/UE4SS/libUE4SS.so ./prepackage/libUE4SS.so
                   strip --strip-debug --strip-unneeded ./prepackage/libUE4SS.so
                   cd ./prepackage && objcopy --add-gnu-debuglink=libUE4SS.so.debug ./libUE4SS.so && ls -al && cd ..
+                  cp -r ./assets/Mods ./prepackage
+
             - name: Archive build output
-              run: zip -r dist.zip ./prepackage
+              run: zip -r UE4SS-${{ matrix.arch }}.zip ./prepackage
 
             - name: Create GitHub Release
               id: create_release
@@ -178,8 +180,8 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   upload_url: ${{ steps.create_release.outputs.upload_url }}
-                  asset_path: ./dist.zip
-                  asset_name: dist.zip
+                  asset_path: ./UE4SS-${{ matrix.arch }}.zip
+                  asset_name: UE4SS-${{ matrix.arch }}.zip
                   asset_content_type: application/zip
             # - name: Package
             #   run: python ./tools/buildscripts/build.py package -d ./prepackage -s linux64
