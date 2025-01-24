@@ -4,7 +4,7 @@ package("polyhook_2")
     -- local version = os.iorun("git rev-list --count HEAD"):trim()
     -- git rev-list --count HEAD ==> 593 ==> 0.0.593
     add_versions("v0.0.593", "19e7cec8cce4a0068f6db04b6d3680c078183002") 
-    add_patches("v0.0.593", path.join(os.scriptdir(), "patches", "polyhook_2", "for-arm64.patch"))
+    add_patches("v0.0.593", path.join(os.scriptdir(), "for-arm64.patch"))
 
     set_sourcedir(os.scriptdir())
     
