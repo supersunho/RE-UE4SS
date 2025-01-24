@@ -5,7 +5,7 @@ package("polyhook_2")
     -- git rev-list --count HEAD ==> 593 ==> 0.0.593
     add_versions("v0.0.593", "19e7cec8cce4a0068f6db04b6d3680c078183002") 
     local patch_src = path.join(os.scriptdir(), "for-arm64.patch")
-    local patch_dest = path.join(package:cachedir(), "source/polyhook_2")
+    local patch_dest = path.join(package:cachedir(), "source", "polyhook_2")
     os.cp(patch_src, patch_dest)
     print(path.join(patch_dest, "for-arm64.patch"))
     add_patches("v0.0.593", path.join(patch_dest, "for-arm64.patch"))
