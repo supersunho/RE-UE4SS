@@ -16,7 +16,15 @@ package("polyhook_2")
         -- Set CMake build types
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
         table.insert(configs, "-DBUILD_SHARED_LIBS=OFF")
-
+        -- Set CMake options for PolyHook 
+        table.insert(configs, "-DCMAKE_INSTALL_PREFIX=" .. package:installdir())
+        table.insert(configs, "-DPOLYHOOK_BUILD_SHARED_LIB=ON")
+        -- table.insert(configs, "-DPOLYHOOK_BUILD_DLL=ON") 
+        -- table.insert(configs, "-DPOLYHOOK_BUILD_SHARED_LIB=" .. (package:config("shared") and "ON" or "OFF"))
+        -- table.insert(configs, "-DPOLYHOOK_USE_EXTERNAL_ZYDIS=ON") 
+        -- table.insert(configs, "-DASMJIT_STATIC=" .. (package:config("shared") and "OFF" or "ON"))
+        -- table.insert(configs, "-DPOLYHOOK_BUILD_STATIC_RUNTIME=OFF") 
+        
         if is_plat("windows") then
             table.insert(configs, "-DZYDIS_INCLUDE_DIR=" .. package:dep("zydis"):installdir("include"))
             table.insert(configs, "-DZYCORE_INCLUDE_DIR=" .. package:dep("zycore"):installdir("include"))
@@ -33,17 +41,8 @@ package("polyhook_2")
                 
             end
         end
-         
-        -- Set MSVC Settings 
-        if is_plat("windows") then
-            local tmp_msvc = os.getenv("MSVC")
-            os.setenv("MSVC", nil)  
-            import("package.tools.cmake").install(package, configs)
-            os.setenv("MSVC", tmp_msvc)  
-        else
-            import("package.tools.cmake").install(package, configs)
-        end 
-
+          
+        import("package.tools.cmake").install(package, configs, { packagedeps = { "zycore", "zydis" } })
         print(package:get("links"))
         package:add("links", "PolyHook_2")
         package:add("links", "asmtk")
