@@ -23,8 +23,8 @@ jobs:
     make-release:
         strategy:
             matrix:
-                os: [ubuntu-latest] # self-hosted는 ARM64용으로 설정
-                # os: [self-hosted] # self-hosted는 ARM64용으로 설정
+                # os: [ubuntu-latest] # self-hosted는 ARM64용으로 설정
+                os: [self-hosted] # self-hosted는 ARM64용으로 설정
                 # arch: [x86_64-linux-gnu]
                 arch: [aarch64-linux-gnu]
         runs-on: ${{ matrix.os }}
@@ -143,8 +143,8 @@ jobs:
             - name: Build
               run: |
                   if [ "${{ matrix.arch }}" == "aarch64-linux-gnu" ]; then
-                    xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y -a arm64 --cross=aarch64-linux-gnu- --bin=/usr/bin
-                    xmake build -v -D
+                    xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y -a arm64 --cross=aarch64-linux-gnu- --bin=/usr/bin --root
+                    xmake build -v -D --root
                   else
                     xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y
                     xmake build -v -D 
