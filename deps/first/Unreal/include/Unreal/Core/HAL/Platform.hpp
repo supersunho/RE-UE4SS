@@ -536,7 +536,7 @@ namespace RC::Unreal
         #else
         static_assert(char(255) > char(0), "Signed char type test failed.");
         #endif
-        
+
         static_assert((!TAreTypesEqual<ANSICHAR, WIDECHAR>::Value), "ANSICHAR and WIDECHAR should be different types.");
         static_assert((!TAreTypesEqual<ANSICHAR, UCS2CHAR>::Value), "ANSICHAR and CHAR16 should be different types.");
         static_assert((!TAreTypesEqual<WIDECHAR, UCS2CHAR>::Value), "WIDECHAR and CHAR16 should be different types.");
@@ -568,7 +568,13 @@ namespace RC::Unreal
         static_assert(int64(-1) < int64(0), "int64 type sign test failed.");
 
         static_assert(sizeof(ANSICHAR) == 1, "ANSICHAR type size test failed.");
-        static_assert(int32(ANSICHAR(-1)) == -1, "ANSICHAR type sign test failed.");
+        // static_assert(int32(ANSICHAR(-1)) == -1, "ANSICHAR type sign test failed.");
+        #if CHAR_MIN < 0
+            static_assert(int32(ANSICHAR(-1)) == -1, "ANSICHAR type sign test failed.");
+        #else
+            static_assert(int32(ANSICHAR(255)) == 255, "ANSICHAR type unsign test failed.");
+        #endif
+
 
         static_assert(sizeof(WIDECHAR) == 2 || sizeof(WIDECHAR) == 4, "WIDECHAR type size test failed.");
 
