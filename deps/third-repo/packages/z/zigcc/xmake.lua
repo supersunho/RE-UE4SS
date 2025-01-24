@@ -19,7 +19,7 @@ package("zigcc")
             if is_arch("arm64") then
                 package:set("urls", json["aarch64-linux"]["tarball"])
                 package:add("versions", "v0.13.0", json["aarch64-linux"]["shasum"])
-            elseif
+            else
                 package:set("urls", json["x86_64-linux"]["tarball"])
                 package:add("versions", "v0.13.0", json["x86_64-linux"]["shasum"])
             end

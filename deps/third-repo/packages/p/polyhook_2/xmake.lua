@@ -22,7 +22,7 @@ package("polyhook_2")
         table.insert(configs, "-DPOLYHOOK_USE_EXTERNAL_ZYDIS=ON") 
         table.insert(configs, "-DASMJIT_STATIC=" .. (package:config("shared") and "OFF" or "ON"))
         table.insert(configs, "-DPOLYHOOK_BUILD_STATIC_RUNTIME=OFF") 
-
+        
         if is_plat("windows") then
             table.insert(configs, "-DZYDIS_INCLUDE_DIR=" .. package:dep("zydis"):installdir("include"))
             table.insert(configs, "-DZYCORE_INCLUDE_DIR=" .. package:dep("zycore"):installdir("include"))
@@ -34,7 +34,9 @@ package("polyhook_2")
             table.insert(configs, "-DZYCORE_LIBRARY=" .. package:dep("zycore"):installdir("lib/libzycore.a"))
             table.insert(configs, "-DZYDIS_LIBRARY=" .. package:dep("zydis"):installdir("lib/libzydis.a"))
             if is_arch("arm64") then
-                table.insert(configs, "-DCMAKE_TOOLCHAIN_FILE=" .. path.join(os.scriptdir(), "toolchain.cmake")) 
+                -- table.insert(configs, "-DCMAKE_TOOLCHAIN_FILE=" .. path.join(os.scriptdir(), "toolchain.cmake")) 
+                table.insert(configs, "-DCMAKE_POSITION_INDEPENDENT_CODE=ON") 
+                
             end
         end
          
