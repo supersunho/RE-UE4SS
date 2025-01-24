@@ -124,18 +124,6 @@ jobs:
                   toolchain: stable
                   # components: rustfmt, clippy
 
-            - name: Run sccache-cache
-              uses: mozilla-actions/sccache-action@v0.0.7
-
-            - name: Set up environment variables for sccache
-              if: ${{ matrix.os != 'self-hosted' }}
-              run: |
-                  echo "SCCACHE_GHA_ENABLED=true" >> $GITHUB_ENV
-                  echo "RUSTC_WRAPPER=$(which sccache)" >> $GITHUB_ENV
-                  echo "SCCACHE_WRAPPER=$(which sccache)" >> $GITHUB_ENV
-                  echo "CC=sccache gcc" >> $GITHUB_ENV
-                  echo "CXX=sccache g++" >> $GITHUB_ENV
-
             - name: Setup xmake
               uses: xmake-io/github-action-setup-xmake@v1
               with:
