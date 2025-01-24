@@ -389,7 +389,14 @@ namespace RC::GUI
 #ifdef WIN32
                 __debugbreak();
 #else
-                asm("int3");
+                // asm("int3");
+                #if defined(__x86_64__) || defined(_M_X64)
+                    __asm__("int3");
+                #elif defined(__aarch64__)
+                    __asm__("brk #0");
+                #else
+                    // nothing
+                #endif
 #endif
             }
 
