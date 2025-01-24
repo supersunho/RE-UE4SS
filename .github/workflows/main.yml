@@ -46,12 +46,10 @@ jobs:
               run: |
                   echo "Building for ${{ matrix.arch }} on ${{ matrix.os }}"
                   sudo apt-get update
+                  sudo apt-get install -y build-essential ccache;
                   if [ "${{ matrix.arch }}" == "aarch64-linux-gnu" ]; then
                     echo "Setting up for aarch64-linux-gnu";
-                    sudo apt-get install -y build-essential ccache;
-                  else
-                    echo "Setting up for x86_64-linux-gnu";
-                    sudo apt-get install -y build-essential ccache;
+                    sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc-dev-arm64-cross 
                   fi
 
             - name: Setup LLVM
@@ -137,7 +135,7 @@ jobs:
             - name: Build
               run: |
                   if [ "${{ matrix.arch }}" == "aarch64-linux-gnu" ]; then
-                    xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y -a arm64 --root
+                    xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y -a arm64 --root --cross=aarch64-linux-gnu
                   else
                     xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y
                   fi
