@@ -74,6 +74,8 @@
 // Generic compiler pre-setup.
 #include "Unreal/Core/GenericPlatform/GenericPlatformCompilerPreSetup.hpp"
 
+#include <climits>
+
 // Whether the CPU is x86/x64 (i.e. both 32 and 64-bit variants)
 #ifndef PLATFORM_CPU_X86_FAMILY
     #if (defined(_M_IX86) || defined(__i386__) || defined(_M_X64) || defined(__amd64__) || defined(__x86_64__))
@@ -528,8 +530,13 @@ namespace RC::Unreal
         static_assert(!PLATFORM_64BITS || sizeof(void*) == 8, "Pointer size is 64bit, but pointers are short.");
         static_assert(PLATFORM_64BITS || sizeof(void*) == 4, "Pointer size is 32bit, but pointers are long.");
 
+        // static_assert(char(-1) < char(0), "Unsigned char type test failed.");
+        #if CHAR_MIN < 0
         static_assert(char(-1) < char(0), "Unsigned char type test failed.");
-
+        #else
+        static_assert(char(255) > char(0), "Signed char type test failed.");
+        #endif
+        
         static_assert((!TAreTypesEqual<ANSICHAR, WIDECHAR>::Value), "ANSICHAR and WIDECHAR should be different types.");
         static_assert((!TAreTypesEqual<ANSICHAR, UCS2CHAR>::Value), "ANSICHAR and CHAR16 should be different types.");
         static_assert((!TAreTypesEqual<WIDECHAR, UCS2CHAR>::Value), "WIDECHAR and CHAR16 should be different types.");
