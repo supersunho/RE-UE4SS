@@ -144,7 +144,7 @@ jobs:
               run: |
                   if [ "${{ matrix.arch }}" == "aarch64-linux-gnu" ]; then
                     xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y -a arm64 --cross=aarch64-linux-gnu- --bin=/usr/bin --root
-                    xmake clean && xmake build -v -D --root
+                    xmake clean --root && xmake build -v -D --root
                   else
                     xmake f -y --ue4ssUI=TUI --ue4ssInput=y --ue4ssIsBeta=y --zig=y -m "Game__Shipping__Linux" -vD --clean --toolchain=zigcross --ccache=y --policies=build.ccache:y
                     xmake clean && xmake build -v -D 
