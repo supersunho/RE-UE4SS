@@ -23,16 +23,8 @@ package("polyhook_2")
         os.vrun("/usr/bin/git apply --reject --ignore-whitespace %s", path.join(patch_dest, "for-arm64.patch"))
         -- Set CMake build types
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-        table.insert(configs, "-DBUILD_SHARED_LIBS=OFF")
-        -- Set CMake options for PolyHook 
-        table.insert(configs, "-DCMAKE_INSTALL_PREFIX=" .. package:installdir())
-        table.insert(configs, "-DPOLYHOOK_BUILD_SHARED_LIB=ON")
-        -- table.insert(configs, "-DPOLYHOOK_BUILD_DLL=ON") 
-        -- table.insert(configs, "-DPOLYHOOK_BUILD_SHARED_LIB=" .. (package:config("shared") and "ON" or "OFF"))
-        -- table.insert(configs, "-DPOLYHOOK_USE_EXTERNAL_ZYDIS=ON") 
-        -- table.insert(configs, "-DASMJIT_STATIC=" .. (package:config("shared") and "OFF" or "ON"))
-        -- table.insert(configs, "-DPOLYHOOK_BUILD_STATIC_RUNTIME=OFF") 
-        
+        table.insert(configs, "-DBUILD_SHARED_LIBS=OFF") 
+
         if is_plat("windows") then
             table.insert(configs, "-DZYDIS_INCLUDE_DIR=" .. package:dep("zydis"):installdir("include"))
             table.insert(configs, "-DZYCORE_INCLUDE_DIR=" .. package:dep("zycore"):installdir("include"))
@@ -42,12 +34,7 @@ package("polyhook_2")
             table.insert(configs, "-DZYDIS_INCLUDE_DIR=" .. package:dep("zydis"):installdir("include"))
             table.insert(configs, "-DZYCORE_INCLUDE_DIR=" .. package:dep("zycore"):installdir("include"))
             table.insert(configs, "-DZYCORE_LIBRARY=" .. package:dep("zycore"):installdir("lib/libzycore.a"))
-            table.insert(configs, "-DZYDIS_LIBRARY=" .. package:dep("zydis"):installdir("lib/libzydis.a"))
-            if is_arch("arm64") then
-                -- table.insert(configs, "-DCMAKE_TOOLCHAIN_FILE=" .. path.join(os.scriptdir(), "toolchain.cmake")) 
-                table.insert(configs, "-DCMAKE_POSITION_INDEPENDENT_CODE=ON") 
-                
-            end
+            table.insert(configs, "-DZYDIS_LIBRARY=" .. package:dep("zydis"):installdir("lib/libzydis.a"))  
         end
           
         import("package.tools.cmake").install(package, configs, { packagedeps = { "zycore", "zydis" } })
