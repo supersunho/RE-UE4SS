@@ -60,6 +60,7 @@ toolchain("zigcross")
     add_cxflags("-fno-delete-null-pointer-checks")
     add_cxflags("-gdwarf")
     add_cxflags("-fno-sanitize=undefined") -- can also use O2 to avoid this, but I'd prefer getting clear binary for now
+    add_cxflags("-stdlib=libc++")
     -- add_cxflags("-fcommon")
     -- add_cxflags("-Wno-deprecated-declarations") 
     -- add_cxflags("-fms-extensions") 
